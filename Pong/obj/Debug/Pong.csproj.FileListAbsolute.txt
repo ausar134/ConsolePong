@@ -1,0 +1,12 @@
+C:\Users\Aggelos\source\repos\Pong\Pong\bin\Debug\Pong.exe.config
+C:\Users\Aggelos\source\repos\Pong\Pong\bin\Debug\Pong.exe
+C:\Users\Aggelos\source\repos\Pong\Pong\bin\Debug\Pong.pdb
+C:\Users\Aggelos\source\repos\Pong\Pong\obj\Debug\Pong.csprojAssemblyReference.cache
+C:\Users\Aggelos\source\repos\Pong\Pong\obj\Debug\Pong.exe
+C:\Users\Aggelos\source\repos\Pong\Pong\obj\Debug\Pong.pdb
+C:\Users\Aggelos\source\repos\ConsolePong\Pong\bin\Debug\Pong.exe.config
+C:\Users\Aggelos\source\repos\ConsolePong\Pong\bin\Debug\Pong.exe
+C:\Users\Aggelos\source\repos\ConsolePong\Pong\bin\Debug\Pong.pdb
+C:\Users\Aggelos\source\repos\ConsolePong\Pong\obj\Debug\Pong.csprojAssemblyReference.cache
+C:\Users\Aggelos\source\repos\ConsolePong\Pong\obj\Debug\Pong.exe
+C:\Users\Aggelos\source\repos\ConsolePong\Pong\obj\Debug\Pong.pdb
