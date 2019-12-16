@@ -25,13 +25,16 @@ namespace Pong
         #endregion
 
         #region Parameters
-        private const int PlayerSpeed = 50;
+        private const int GameSpeed = 50;
+        private const int MinBlocks = 15;
+        private const int MaxBlocks = 100;
         //private const int PlayerSegments = 11;
         #endregion
 
         #region String Characters
         private const string PlayerSymbol = "═";
         private const string BallSymbol = "*";
+        private const string BlockSymbol = "#";
         private const string BorderHeightSymbol = "║";
         private const string BorderWidthSymbol = "═";
         private const string TopLeftCornerSymbol = "╔";
@@ -62,11 +65,6 @@ namespace Pong
             DrawBallOnInit();
             DrawScoreOnInit();
             DrawPlayerOnInit();
-        }
-
-        public static void PlayableGame()
-        {
-            
         }
 
         public static void DrawBordersOnInit()
@@ -112,13 +110,9 @@ namespace Pong
 
         public static void DrawScoreOnInit()
         {
-            int playerOneScore = 0;
-            int playerTwoScore = 0;
-
-            Console.SetCursorPosition(scorePosX, scorePosY - 1);
-            Console.Write("Player 1 : " + playerOneScore);
+            int playerScore = 0;
             Console.SetCursorPosition(scorePosX, scorePosY);
-            Console.Write("Player 2 : " + playerTwoScore);
+            Console.Write("Player 1 : " + playerScore);
         }
 
         public static void DrawPlayerOnInit()
@@ -150,10 +144,18 @@ namespace Pong
             Console.Write(symbol);
         }
 
-        //Complete this after ball movement
-        public static void UpdateScore(int scoreMax, int playerOneScore, int playerTwoScore)
+        public static void DrawBlocks()
         {
+            Random blocksRandom = new Random();
+            //int currentBlockPositionX = 50;
+            //int currentBlockPositionY = 5;
+            //var blockSpawnX = currentBlockPositionX >= BorderSize + 1 && currentBlockPositionX <= BorderWidth - 1;
+            //var blockSpawnY = currentBlockPositionY >= BorderSize + 1 && currentBlockPositionY <= BorderHeight / 2 - 10;
 
+            var blockSpawnMin = blocksRandom.Next(BorderSize + 1, BorderWidth - 1);
+            var blockSpawnMax = blocksRandom.Next(BorderSize + 1, BorderHeight / 2 - 10);
+            Console.SetCursorPosition(blockSpawnMin, blockSpawnMax);
+            Console.Write(BlockSymbol);
         }
 
         public static void GameLogic()
@@ -191,6 +193,8 @@ namespace Pong
                     }
                 }
 
+                DrawBlocks();
+
                 DrawBall(currentBallPosX, currentBallPosY, " ");
 
                 #region Ball Movement
@@ -207,6 +211,7 @@ namespace Pong
                     numberY = numberY * (-1);
                 }
 
+                //Lose Condition
                 if(currentBallPosY == BorderHeight - 1)
                 {
                     numberX = 0;
@@ -214,9 +219,9 @@ namespace Pong
                     Console.Clear();
                     Console.SetCursorPosition(MaxWidth / 2 - 5, MaxHeight / 2);
                     Console.Write("You lose");
+                    Thread.Sleep(4000);
                     break;
                 }
-
                 #endregion
 
                 DrawBall(currentBallPosX, currentBallPosY, BallSymbol);
@@ -239,7 +244,7 @@ namespace Pong
 
                 stepX = 0;
                 //var t = (int)(PlayerSpeed/1.8);
-                Thread.Sleep(PlayerSpeed * 5);
+                Thread.Sleep(GameSpeed * 5);
             }
         }
     }
