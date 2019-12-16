@@ -137,14 +137,17 @@ namespace Pong
             Console.Write(BallSymbol);
         }
 
-        public static void RedrawPosX(int currentPosClearX, int currentPosRedrawX)
+        public static void DrawPosX(int x, int y, string symbol)
         {
-            Console.SetCursorPosition(currentPosClearX, StartingPlayerPosY);
-            Console.Write(" ");
-
-            Console.SetCursorPosition(currentPosRedrawX, StartingPlayerPosY);
+            Console.SetCursorPosition(x, y);
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(PlayerSymbol);
+            Console.Write(symbol);
+        }
+
+        public static void DrawBall(int x, int y, string symbol)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(symbol);
         }
 
         //Complete this after ball movement
@@ -188,58 +191,48 @@ namespace Pong
                     }
                 }
 
+                DrawBall(currentBallPosX, currentBallPosY, " ");
+
                 #region Ball Movement
                 currentBallPosX += numberX;
                 currentBallPosY += numberY;
+                var paddleBody = currentBallPosX >= currentPosX - 5 && currentBallPosX <= currentPosX + 5;
 
                 if (currentBallPosX >= BorderWidth - 1 || currentBallPosX <= BorderSize + 1)
                 {
                     numberX = numberX * (-1);
                 }
-                if (currentBallPosY >= BorderHeight - 1 || currentBallPosY <= BorderSize + 1)
+                if (currentBallPosY <= BorderSize + 1 || paddleBody && currentBallPosY == currentPosY - 1)
                 {
                     numberY = numberY * (-1);
                 }
-                #endregion
 
-                if (currentBallPosY - 1 == currentPosY - 1 && currentBallPosX == currentPosX)
+                if(currentBallPosY == BorderHeight - 1)
                 {
-                    numberX = numberX * (-1);
-                    numberY = numberY * (-1);
+                    numberX = 0;
+                    numberY = 0;
+                    Console.Clear();
+                    Console.SetCursorPosition(MaxWidth / 2 - 5, MaxHeight / 2);
+                    Console.Write("You lose");
+                    break;
                 }
 
-                #region Redraw Ball
-                if (currentBallPosX > BorderSize + 1 && currentBallPosX < BorderWidth - 1 
-                    && currentBallPosY > BorderSize + 1 && currentBallPosY < BorderHeight - 1 )
-                {
-                    Console.SetCursorPosition(currentBallPosX - 1, currentBallPosY - 1);
-                    Console.Write(" ");
-
-                    Console.SetCursorPosition(currentBallPosX + 1, currentBallPosY + 1);
-                    Console.Write(" ");
-
-                    Console.SetCursorPosition(currentBallPosX - 1, currentBallPosY + 1);
-                    Console.Write(" ");
-
-                    Console.SetCursorPosition(currentBallPosX + 1, currentBallPosY - 1);
-                    Console.Write(" ");
-
-                    Console.SetCursorPosition(currentBallPosX, currentBallPosY);
-                    Console.Write(BallSymbol);
-                }
                 #endregion
-                //MoveBall();
 
-                #region Condition to Move and Clear
+                DrawBall(currentBallPosX, currentBallPosY, BallSymbol);
+                                
+                #region Paddle Movement Check
                 if (stepX > 0)
                 {
-                    RedrawPosX(currentPosX - 5, currentPosX + 5);
+                    DrawPosX(currentPosX - 5, currentPosY, " ");
+                    DrawPosX(currentPosX + 5, currentPosY, PlayerSymbol);
                     currentPosX += 1;
                 }
 
                 if (stepX < 0)
                 {
-                    RedrawPosX(currentPosX + 5, currentPosX - 5);
+                    DrawPosX(currentPosX + 5, currentPosY, " ");
+                    DrawPosX(currentPosX - 5, currentPosY, PlayerSymbol);
                     currentPosX -= 1;
                 }
                 #endregion
@@ -248,48 +241,6 @@ namespace Pong
                 //var t = (int)(PlayerSpeed/1.8);
                 Thread.Sleep(PlayerSpeed * 5);
             }
-        }
-                
-        public static void RedrawBall(int clearBallPos, int redrawBallPos)
-        {
-        
-            Console.SetCursorPosition(clearBallPos - 1, clearBallPos - 1);
-            Console.Write(" ");
-
-            Console.SetCursorPosition(clearBallPos + 1, clearBallPos + 1);
-            Console.Write(" ");
-
-            Console.SetCursorPosition(clearBallPos - 1, clearBallPos + 1);
-            Console.Write(" ");
-
-            Console.SetCursorPosition(clearBallPos + 1, clearBallPos - 1);
-            Console.Write(" ");
-
-            Console.SetCursorPosition(redrawBallPos, redrawBallPos);
-            Console.Write(BallSymbol);
-        }
-
-        public static void MoveBall()
-        {
-            int numberX = 1;
-            int numberY = 1;
-
-            int currentBallPosX = StartingBallPosX;
-            int currentBallPosY = StartingBallPosY;
-
-            currentBallPosX += numberX;
-            currentBallPosY += numberY;
-
-            if (currentBallPosX >= BorderWidth - 2 || currentBallPosX <= BorderSize + 2)
-            {
-                numberX = numberX * (-1);
-            }
-            if (currentBallPosY >= BorderHeight - 2 || currentBallPosY <= BorderSize + 2)
-            {
-                numberY = numberY * (-1);
-            }
-
-            RedrawBall(currentBallPosX,currentBallPosY);
         }
     }
 }
